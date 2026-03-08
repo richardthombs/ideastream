@@ -333,3 +333,105 @@ _Source: https://raw.githubusercontent.com/steveyegge/beads/main/README.md_
 _Source: https://raw.githubusercontent.com/steveyegge/beads/main/docs/COPILOT_INTEGRATION.md_
 _Source: https://docs.github.com/en/github-models/use-github-models/prototyping-with-ai-models_
 _Source: https://raw.githubusercontent.com/dolthub/dolt/main/README.md_
+
+## Implementation Research and Recommendations
+
+### Current Project Readiness
+
+The current repository state matters to the implementation path. At the time of writing, this workspace contains BMAD planning infrastructure and generated artefacts, but no application source tree, package manifest, service skeleton, or runtime code. That means the immediate implementation question is not how to retrofit Beads, Dolt, or direct LLM invocation into an existing system. It is how to choose an initial architecture that preserves optionality and avoids locking the project into unnecessary complexity before there is a concrete product surface.
+
+That changes the recommendation materially. In a greenfield state, the safest path is to separate three decisions that are easy to conflate:
+
+1. whether the team wants structured development-work tracking for humans and coding agents;
+2. whether the product itself needs runtime LLM inference;
+3. whether versioned relational data is a product requirement or only an implementation detail under Beads.
+
+The practical implication is that Beads, Dolt, and direct model invocation should not all be introduced at once by default. They solve different problems and should enter the stack only when the relevant problem is real.
+
+### Implementation Option Matrix
+
+There are three implementation tracks worth considering for this project state.
+
+**Track A: Development workflow first**
+
+Use Beads as a project-operations layer for planning and execution, optionally expose it to GitHub Copilot through MCP, and defer any direct model integration until the application requirements are clearer.
+
+This track is strongest when the near-term goal is to improve planning, task state, dependency management, and agent collaboration during development. It is the lowest-risk way to benefit from Beads because the project can adopt structured work memory without committing product code to a specific inference stack.
+
+_Advantages:_ Fast adoption, minimal irreversible architecture decisions, good fit for an empty repository, preserves freedom to choose or change runtime model providers later.
+_Risks:_ Does not by itself advance product-side LLM capability.
+_Recommended when:_ The immediate next step is organised delivery rather than shipping a working LLM-backed feature.
+
+**Track B: Product inference first**
+
+Create a minimal application/service boundary that calls GitHub Models directly through REST or SDK, and keep Beads entirely on the development-tooling side.
+
+This track is strongest when the product's first real deliverable is model-backed functionality and the team needs deterministic, testable programmatic inference rather than more sophisticated planning infrastructure.
+
+_Advantages:_ Clean runtime boundary, explicit authentication model, easier observability and testability than editor-mediated automation.
+_Risks:_ If adopted too early, the team may start with a model integration before clarifying workflow, state, and orchestration responsibilities.
+_Recommended when:_ The first milestone requires a running product feature that invokes an LLM directly.
+
+**Track C: Agentic execution platform**
+
+Build a custom orchestration layer that combines a direct model API for reasoning with explicit tools for task management, file mutation, command execution, and validation, while using Beads as structured operational memory.
+
+This track is strongest when the intended product is itself an autonomous or semi-autonomous execution system rather than a conventional app with some AI features.
+
+_Advantages:_ Architecturally aligned with true agentic behaviour; preserves explicit separation between reasoning, tools, and state.
+_Risks:_ Highest design and implementation complexity; premature if the product requirements are still exploratory.
+_Recommended when:_ The product vision explicitly requires autonomous task execution loops rather than simple inference.
+
+### Recommended Sequence for This Repository
+
+Given the current state of this repository, the most defensible implementation path is a staged sequence:
+
+**Stage 1: Keep Beads as an optional development-side capability**
+
+If the team wants structured issue and dependency state for planning and coding-agent collaboration, adopt Beads as a workflow tool first. Treat it as operational support, not as part of the product runtime. Let Dolt remain implicit underneath it.
+
+**Stage 2: Decide whether the product needs direct model invocation**
+
+Before introducing any runtime integration, write down the first user-facing capability that actually requires an LLM. If that requirement is still vague, adding a model provider now will create architecture without a stable use case.
+
+**Stage 3: Introduce a narrow inference boundary**
+
+If runtime inference is required, implement a small adapter around GitHub Models rather than coupling product logic directly to editor-mediated tooling. The adapter should own authentication, request formatting, response parsing, retries, logging, and provider-specific constraints.
+
+**Stage 4: Add orchestration only if the product truly needs it**
+
+If the system must plan, choose tools, apply file changes, or execute commands autonomously, introduce a separate orchestration layer after the direct inference boundary exists and is validated. Do not jump straight from editor-assisted workflows to a full autonomous runtime.
+
+### Concrete Implementation Questions to Answer Before Coding
+
+The next implementation decision should be driven by a short set of product questions:
+
+1. Is the first deliverable a developer workflow improvement, an end-user application, or an autonomous agent system?
+2. Does the first release need runtime model calls, or can it remain a planning and workflow effort for now?
+3. If runtime model calls are needed, what is the smallest request and response contract the product actually requires?
+4. Does any part of the product need branchable, queryable, versioned operational data outside Beads itself?
+5. What approval, observability, and failure-handling boundaries are required if any autonomous actions are introduced?
+
+Until these questions are answered, the architecture should remain intentionally narrow.
+
+### Proof-of-Concept Recommendation
+
+For this repository, the most efficient proof of concept is not to integrate all three technologies immediately. It is to validate the likely critical path in the smallest possible order:
+
+1. Define the first product slice in the PRD.
+2. If that slice requires model inference, implement a minimal direct GitHub Models adapter and test it independently.
+3. If structured development tracking is valuable during build-out, add Beads as a team workflow tool and optionally MCP-enable it for Copilot.
+4. Only evaluate direct Dolt usage if a separate versioned-data requirement emerges that Beads does not already cover.
+
+This order keeps the implementation aligned with actual product risk. It avoids building around Beads when the real uncertainty is product inference, and it avoids promoting Dolt into the design before there is a clear data-model reason to do so.
+
+### Final Implementation Recommendation
+
+The current evidence supports the following recommendation:
+
+- Use Beads, if adopted, as a development and task-memory layer rather than a runtime application dependency.
+- Use GitHub Models direct API or SDK if the product itself needs LLM inference.
+- Treat Dolt as an implementation detail under Beads unless a distinct versioned relational data requirement appears.
+- Add a custom orchestration layer only if the product goal is explicitly agentic execution.
+
+For this project stage, the next required BMAD move is still to turn the research into product definition rather than coding immediately. The implementation research now supports that handoff: it narrows the architectural options and identifies a staged path, but it does not remove the need for a PRD to choose which of those paths the product actually needs.
