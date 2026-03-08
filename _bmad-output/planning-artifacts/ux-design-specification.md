@@ -64,15 +64,16 @@ For MVP, two high-frequency realities shape the experience:
 
 The product should follow a dual-surface strategy:
 - CLI as the operational control surface for capture, dispatch, and workflow actions.
-- Lightweight webview as the visibility surface for cross-project state, progress, and inspection.
+- Lightweight webview as the visibility and guided-capture surface for cross-project state, progress, inspection, and quick to-do entry.
 
 This approach preserves command-line power while making project-state comprehension faster and less cognitively heavy.
 
 ### Effortless Interactions
 
 The interaction that must feel effortless is adding new to-dos.
-Users should be able to capture intent in minimal input, with:
-- low-friction command structure,
+Users should be able to capture intent in minimal input from either CLI or web UI, with:
+- low-friction command structure in CLI,
+- a fast web "quick add" path in Mission Cockpit,
 - automatic or highly assisted project assignment,
 - immediate confirmation of bead creation and state.
 
@@ -92,7 +93,7 @@ Failure in assignment accuracy or bead construction is make-or-break for perceiv
 2. Capture should be near-zero friction: creating new to-dos should feel fast and natural.
 3. Visibility without overload: cross-project status must be legible at a glance.
 4. Automation with accountability: action should feel exciting, but always traceable and inspectable.
-5. CLI power, visual clarity: execution via CLI, state understanding via lightweight webview.
+5. CLI power, web clarity: execute quickly in CLI or create via guided web intake, with shared state semantics across both.
 
 ## Desired Emotional Response
 
@@ -256,7 +257,7 @@ Composable primitives and local component ownership support gradual hardening an
 
 Use a dual-surface model:
 - CLI: command execution, capture, assignment, dispatch, and inspection operations.
-- Webview: cross-project visibility, bead lifecycle tracking, event history, and recovery guidance.
+- Webview: cross-project visibility, quick to-do capture, bead lifecycle tracking, event history, and recovery guidance.
 
 Webview build approach:
 - Define a token layer using CSS variables (mapped to Tailwind theme values).
@@ -352,7 +353,7 @@ Novel combination:
 
 5. Feedback and completion
 - CLI response includes bead ID, assignment result, construction details, and dispatch status.
-- Webview reflects new bead and current lifecycle state immediately.
+- Webview confirms successful to-do creation and reflects new bead and current lifecycle state immediately.
 - User can inspect history and follow recommended next actions.
 
 ## Visual Design Foundation
@@ -452,6 +453,7 @@ Ideastream will use a split design direction by interface:
 
 2. Web Experience: Mission Cockpit
 - A strategic control interface focused on cross-project oversight.
+- Includes an embedded quick-capture path for creating new to-dos without leaving cockpit context.
 - High-level telemetry for project state, dispatch health, and exception monitoring.
 - Strong support for confidence review, traceability, and calm recovery workflows.
 
@@ -462,7 +464,7 @@ A single visual direction is not sufficient because ideastream serves two differ
 - CLI intent is execution:
 Users need speed, precision, and immediate confirmation.
 - Web intent is orientation and governance:
-Users need broad visibility, risk awareness, and recoverability across projects.
+Users need broad visibility, risk awareness, recoverability across projects, and the ability to add new to-dos in context.
 
 This split enables each surface to optimise for its core job while preserving one shared product model:
 - same lifecycle semantics,
@@ -507,7 +509,7 @@ Primary goal: move from free-text intent to trustworthy progress with minimal fr
 
 ```mermaid
 flowchart TD
-  A[User enters task via CLI: idea add] --> B{Assignment confidence very high?}
+  A[User enters task via CLI idea add or Web Quick Add] --> B{Assignment confidence very high?}
   B -- Yes --> C[Auto-assign to project]
   B -- No --> D[Prompt for assignment confirmation]
   D --> C
@@ -523,6 +525,7 @@ flowchart TD
 
 Interaction notes:
 - CLI success response must include bead ID, assignment result, construction summary, and next command hint.
+- Web Quick Add success response must include the same receipt semantics (bead ID, assignment result, dispatch state).
 - Webview must show immediate lifecycle visibility and confidence context.
 
 ### Journey 2: Cross-Project Review and Prioritisation
@@ -672,6 +675,13 @@ Policy: only 100% certain assignments are admitted into the main bead workflow.
 Behavior: if certainty is below 100%, require explicit user resolution before creation/entry.
 Scope: pre-entry interaction, not a persistent in-flow confidence display component.
 
+#### 8. Web Quick Add Panel
+
+Purpose: Enable fast to-do creation directly from Mission Cockpit.
+Content: free-text to-do field, optional project selector, optional context/reference fields.
+Behavior: supports keyboard-first submission, assignment certainty gating, and immediate receipt-style confirmation on create.
+Placement: available from global cockpit header and within project detail views.
+
 ### Component Implementation Strategy
 
 1. Build component layers:
@@ -703,6 +713,7 @@ Phase 1 (MVP-critical):
 3. Operation Receipt Block
 4. Trace Timeline (minimum viable)
 5. Exception Triage Panel
+6. Web Quick Add Panel
 
 Phase 2 (MVP hardening):
 1. Dispatch Decision Card
@@ -760,6 +771,7 @@ Info feedback:
 Intake forms (web):
 - Single dominant capture field first, optional metadata second.
 - Progressive disclosure for advanced options.
+- Include quick-submit behaviour (`Cmd/Ctrl+Enter`) and clear post-submit receipt with bead ID.
 
 Assignment certainty gate pattern:
 - If assignment is not 100% certain, do not create/admit bead.
@@ -772,6 +784,10 @@ Validation:
 
 CLI form parity:
 - Equivalent certainty-gate behaviour for `idea add` and related intake flows.
+
+Web intake parity:
+- Creating a to-do in web UI must invoke the same assignment, bead-construction, and dispatch rules as CLI.
+- Web success and error copy should mirror CLI operation-receipt semantics.
 
 ### Navigation Patterns
 
