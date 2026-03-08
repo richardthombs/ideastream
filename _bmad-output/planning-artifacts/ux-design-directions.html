@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ideastream Design Directions - Distinct Concepts</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      background: #eef2f5;
+      color: #11202b;
+    }
+
+    header {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 20px 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      letter-spacing: 0.01em;
+    }
+
+    p.lead {
+      margin: 8px 0 0;
+      color: #425563;
+    }
+
+    .grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 20px 28px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 18px;
+    }
+
+    .dir {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #d4dde4;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(17, 32, 43, 0.08);
+      animation: enter 450ms ease both;
+    }
+
+    .dir:nth-child(2) { animation-delay: 70ms; }
+    .dir:nth-child(3) { animation-delay: 140ms; }
+    .dir:nth-child(4) { animation-delay: 210ms; }
+    .dir:nth-child(5) { animation-delay: 280ms; }
+    .dir:nth-child(6) { animation-delay: 350ms; }
+
+    .top {
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .canvas {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      min-height: 220px;
+      padding: 12px;
+    }
+
+    .meta {
+      padding: 12px;
+      border-top: 1px solid #e2e9ee;
+      background: #fcfdfe;
+    }
+
+    .meta h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .meta p {
+      margin: 6px 0 0;
+      font-size: 0.88rem;
+      color: #4b5e6a;
+      line-height: 1.38;
+    }
+
+    .chips { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #e8eff3;
+      color: #304350;
+    }
+
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .bar { height: 10px; border-radius: 6px; background: #d7e1e7; }
+    .pill { border-radius: 999px; padding: 3px 8px; font-size: 0.7rem; color: #fff; font-weight: 700; }
+
+    /* Direction 1: Terminal Glass */
+    .d1 .top { background: linear-gradient(120deg, #1f2a44, #0d6b6a); }
+    .d1 .canvas {
+      background: radial-gradient(500px 250px at 20% -10%, #223257, #111827 55%);
+      font-family: "JetBrains Mono", "SF Mono", monospace;
+      color: #b9f6e7;
+    }
+    .terminal {
+      border: 1px solid #334155;
+      border-radius: 10px;
+      background: rgba(2, 6, 23, 0.65);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+    .cmd { color: #82f9d1; }
+    .out { color: #b6c6d2; }
+    .ok { color: #44d092; }
+
+    /* Direction 2: Editorial Project Ledger */
+    .d2 .top { background: linear-gradient(120deg, #3f2d20, #8b4f26); }
+    .d2 .canvas {
+      background: #f9f5ef;
+      font-family: "Iowan Old Style", "Palatino", serif;
+      color: #2b231c;
+    }
+    .ledger {
+      border: 2px solid #d8c5af;
+      background: #fffdf8;
+      padding: 10px;
+      display: grid;
+      gap: 10px;
+    }
+    .rule { border-top: 1px dashed #bfa893; }
+
+    /* Direction 3: Kanban Velocity */
+    .d3 .top { background: linear-gradient(120deg, #0f4b86, #1268b0); }
+    .d3 .canvas { background: #edf5fb; }
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .col {
+      border: 1px solid #c9ddeb;
+      border-radius: 8px;
+      background: #fff;
+      padding: 6px;
+      display: grid;
+      gap: 6px;
+    }
+    .card {
+      border: 1px solid #d7e4ef;
+      border-left: 4px solid #4f8ac3;
+      border-radius: 6px;
+      padding: 5px;
+      background: #fdfefe;
+    }
+
+    /* Direction 4: Brutalist Command Board */
+    .d4 .top { background: #000; }
+    .d4 .canvas {
+      background: repeating-linear-gradient(135deg, #fff 0, #fff 18px, #ffe900 18px, #ffe900 36px);
+      font-family: "Arial Black", "Impact", sans-serif;
+      color: #000;
+    }
+    .brutal {
+      border: 4px solid #000;
+      background: #fff;
+      padding: 8px;
+      display: grid;
+      gap: 8px;
+    }
+    .blk {
+      border: 3px solid #000;
+      padding: 6px;
+      font-size: 0.78rem;
+      background: #fffcf0;
+    }
+
+    /* Direction 5: Calm Ops Atlas */
+    .d5 .top { background: linear-gradient(120deg, #0f5e56, #12776d); }
+    .d5 .canvas {
+      background: linear-gradient(180deg, #edf7f4, #f7fcfa);
+      font-family: "Source Sans 3", "Segoe UI", sans-serif;
+    }
+    .atlas {
+      display: grid;
+      grid-template-columns: 95px 1fr;
+      border: 1px solid #b8dad2;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .atlas-nav { background: #dff1eb; border-right: 1px solid #c0e0d8; }
+    .atlas-main { padding: 8px; display: grid; gap: 7px; }
+
+    /* Direction 6: Mission Cockpit */
+    .d6 .top { background: linear-gradient(120deg, #43245f, #6d3595); }
+    .d6 .canvas {
+      background: radial-gradient(450px 220px at 80% 0, #5e3b7e, #2e1f44 60%);
+      color: #f3ecff;
+    }
+    .cockpit {
+      border: 1px solid #77509d;
+      border-radius: 10px;
+      background: rgba(22, 12, 34, 0.72);
+      padding: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .panel {
+      border: 1px solid #8e68b2;
+      border-radius: 8px;
+      padding: 6px;
+      background: rgba(34, 18, 52, 0.6);
+    }
+
+    @media (max-width: 780px) {
+      .grid { grid-template-columns: 1fr; }
+      .kanban { grid-template-columns: 1fr; }
+      .atlas { grid-template-columns: 1fr; }
+      .atlas-nav { min-height: 40px; }
+      .cockpit { grid-template-columns: 1fr; }
+    }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ideastream: Six Distinct Design Directions</h1>
+    <p class="lead">Each direction uses a different visual language, layout model, and interaction emphasis for clearer comparison.</p>
+  </header>
+
+  <main class="grid">
+    <section class="dir d1">
+      <div class="top">Direction 1 - Terminal Glass</div>
+      <div class="canvas">
+        <div class="terminal">
+          <div class="cmd">$ is add "draft migration guide"</div>
+          <div class="out">assignment: docs-replatform (confidence 0.97)</div>
+          <div class="ok">bead: b-1432 created and dispatched</div>
+          <div class="out">next: is bead inspect b-1432</div>
+        </div>
+      </div>
+      <div class="meta">
+        <h2>Terminal Glass</h2>
+        <p>CLI-native feel translated into webview: luminous command receipts, explicit confidence, and trace-first identity.</p>
+        <div class="chips"><span class="chip">CLI aesthetic</span><span class="chip">Traceability</span></div>
+      </div>
+    </section>
+
+    <section class="dir d2">
+      <div class="top">Direction 2 - Editorial Project Ledger</div>
+      <div class="canvas">
+        <div class="ledger">
+          <div class="row"><strong>Project Notebook</strong><span>Week 10</span></div>
+          <div class="rule"></div>
+          <div class="row"><span>New to-do captured</span><span>09:14</span></div>
+          <div class="row"><span>Bead created with rationale</span><span>09:14</span></div>
+          <div class="row"><span>Dispatch queued for review</span><span>09:15</span></div>
+        </div>
+      </div>
+      <div class="meta">
+        <h2>Editorial Project Ledger</h2>
+        <p>Content-first, narrative-heavy style for users managing rich documentation and non-code artefacts.</p>
+        <div class="chips"><span class="chip">Knowledge workflows</span><span class="chip">Calm reading</span></div>
+      </div>
+    </section>
+
+    <section class="dir d3">
+      <div class="top">Direction 3 - Kanban Velocity</div>
+      <div class="canvas">
+        <div class="kanban">
+          <div class="col"><strong>Waiting</strong><div class="card">Bead b-1441</div><div class="card">Research summary</div></div>
+          <div class="col"><strong>In Progress</strong><div class="card">Dispatch: docs flow</div><div class="card">Project assignment check</div></div>
+          <div class="col"><strong>Completed</strong><div class="card">b-1432 merged</div><div class="card">Checklist generated</div></div>
+        </div>
+      </div>
+      <div class="meta">
+        <h2>Kanban Velocity</h2>
+        <p>Flow-centric board optimised for fast status sweeps and load-balancing across projects.</p>
+        <div class="chips"><span class="chip">Flow management</span><span class="chip">Portfolio triage</span></div>
+      </div>
+    </section>
+
+    <section class="dir d4">
+      <div class="top">Direction 4 - Brutalist Command Board</div>
+      <div class="canvas">
+        <div class="brutal">
+          <div class="blk">ASSIGNMENT CONFIDENCE BELOW THRESHOLD - CONFIRM REQUIRED</div>
+          <div class="blk">BEAD b-1450 CREATED - NOT DISPATCHED</div>
+          <div class="blk">NEXT MOVE: REVIEW + APPROVE PLAN</div>
+        </div>
+      </div>
+      <div class="meta">
+        <h2>Brutalist Command Board</h2>
+        <p>High-contrast, no-ambiguity interface for operators who want maximum clarity and urgency cues.</p>
+        <div class="chips"><span class="chip">High assurance</span><span class="chip">Zero ambiguity</span></div>
+      </div>
+    </section>
+
+    <section class="dir d5">
+      <div class="top">Direction 5 - Calm Ops Atlas</div>
+      <div class="canvas">
+        <div class="atlas">
+          <div class="atlas-nav"></div>
+          <div class="atlas-main">
+            <div class="bar" style="width:64%"></div>
+            <div class="row"><div class="bar" style="width:82%"></div><span class="pill" style="background:#1c8c67">Stable</span></div>
+            <div class="row"><div class="bar" style="width:71%"></div><span class="pill" style="background:#b26a18">Review</span></div>
+            <div class="row"><div class="bar" style="width:88%"></div><span class="pill" style="background:#2d7093">Trace</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta">
+        <h2>Calm Ops Atlas</h2>
+        <p>Balanced, trust-forward layout with predictable zones and low-stress exception handling.</p>
+        <div class="chips"><span class="chip">Calm confidence</span><span class="chip">Status-first</span></div>
+      </div>
+    </section>
+
+    <section class="dir d6">
+      <div class="top">Direction 6 - Mission Cockpit</div>
+      <div class="canvas">
+        <div class="cockpit">
+          <div class="panel">
+            <div class="bar" style="width:74%; background:#9b85b5"></div>
+            <div class="row" style="margin-top:6px"><span>Dispatch Health</span><span class="pill" style="background:#2fbc91">Good</span></div>
+          </div>
+          <div class="panel">
+            <div class="bar" style="width:56%; background:#9b85b5"></div>
+            <div class="row" style="margin-top:6px"><span>Confidence Drift</span><span class="pill" style="background:#bd6f2f">Watch</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meta">
+        <h2>Mission Cockpit</h2>
+        <p>Strategic operations aesthetic: portfolio telemetry, exception radar, and high-level control view.</p>
+        <div class="chips"><span class="chip">Control tower</span><span class="chip">Executive overview</span></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

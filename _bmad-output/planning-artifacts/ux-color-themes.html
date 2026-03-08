@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ideastream Colour Themes</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", "Segoe UI", sans-serif;
+      background: #eef3f6;
+      color: #1a2933;
+    }
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 8px;
+    }
+    h1 { margin: 0; font-size: clamp(1.3rem, 2.4vw, 2rem); }
+    p { margin: 8px 0 0; color: #4a5e6c; }
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .theme {
+      border: 1px solid #d4dee6;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(19, 36, 48, 0.07);
+    }
+    .title {
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #fff;
+    }
+    .swatches { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .swatch {
+      min-height: 56px;
+      padding: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      color: #fff;
+    }
+    .meta { padding: 10px 12px 12px; }
+    .meta strong { display: block; margin-bottom: 4px; }
+    .meta span { color: #526674; font-size: 0.85rem; }
+
+    .t1 .title { background: #0f6b6f; }
+    .t1 .sw1 { background: #0f6b6f; }
+    .t1 .sw2 { background: #1f2f3a; }
+    .t1 .sw3 { background: #d2872c; }
+    .t1 .sw4 { background: #1f8a5b; }
+    .t1 .sw5 { background: #a95f10; }
+    .t1 .sw6 { background: #b5463a; }
+
+    .t2 .title { background: #2f355f; }
+    .t2 .sw1 { background: #2f355f; }
+    .t2 .sw2 { background: #141a2c; }
+    .t2 .sw3 { background: #d08a28; }
+    .t2 .sw4 { background: #2f9a6f; }
+    .t2 .sw5 { background: #9f5a14; }
+    .t2 .sw6 { background: #ad3e54; }
+
+    .t3 .title { background: #3d5e40; }
+    .t3 .sw1 { background: #3d5e40; }
+    .t3 .sw2 { background: #1f2a1f; }
+    .t3 .sw3 { background: #bc7c26; }
+    .t3 .sw4 { background: #2f8f5f; }
+    .t3 .sw5 { background: #8f6115; }
+    .t3 .sw6 { background: #a93d31; }
+
+    .t4 .title { background: #6d3649; }
+    .t4 .sw1 { background: #6d3649; }
+    .t4 .sw2 { background: #291821; }
+    .t4 .sw3 { background: #d49a34; }
+    .t4 .sw4 { background: #318a7a; }
+    .t4 .sw5 { background: #a56418; }
+    .t4 .sw6 { background: #b43c45; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ideastream Theme Exploration</h1>
+    <p>Semantic-first colour candidates for a dual-surface product: CLI confidence + web Mission Cockpit visibility.</p>
+  </header>
+  <main class="grid">
+    <section class="theme t1">
+      <div class="title">Theme 1 - Calm Control</div>
+      <div class="swatches">
+        <div class="swatch sw1">Primary</div><div class="swatch sw2">Surface</div><div class="swatch sw3">Accent</div>
+        <div class="swatch sw4">Success</div><div class="swatch sw5">Warning</div><div class="swatch sw6">Error</div>
+      </div>
+      <div class="meta"><strong>Recommended Base</strong><span>Balanced trust, clarity, and momentum cues.</span></div>
+    </section>
+
+    <section class="theme t2">
+      <div class="title">Theme 2 - Night Ops</div>
+      <div class="swatches">
+        <div class="swatch sw1">Primary</div><div class="swatch sw2">Surface</div><div class="swatch sw3">Accent</div>
+        <div class="swatch sw4">Success</div><div class="swatch sw5">Warning</div><div class="swatch sw6">Error</div>
+      </div>
+      <div class="meta"><strong>Telemetry Feel</strong><span>Slightly more technical tone for operational dashboards.</span></div>
+    </section>
+
+    <section class="theme t3">
+      <div class="title">Theme 3 - Field Notes</div>
+      <div class="swatches">
+        <div class="swatch sw1">Primary</div><div class="swatch sw2">Surface</div><div class="swatch sw3">Accent</div>
+        <div class="swatch sw4">Success</div><div class="swatch sw5">Warning</div><div class="swatch sw6">Error</div>
+      </div>
+      <div class="meta"><strong>Content-Forward</strong><span>Softer tone for mixed code and documentation repositories.</span></div>
+    </section>
+
+    <section class="theme t4">
+      <div class="title">Theme 4 - Signal Board</div>
+      <div class="swatches">
+        <div class="swatch sw1">Primary</div><div class="swatch sw2">Surface</div><div class="swatch sw3">Accent</div>
+        <div class="swatch sw4">Success</div><div class="swatch sw5">Warning</div><div class="swatch sw6">Error</div>
+      </div>
+      <div class="meta"><strong>Mission Cockpit Accent</strong><span>Higher contrast style for exception-first workflows.</span></div>
+    </section>
+  </main>
+</body>
+</html>
